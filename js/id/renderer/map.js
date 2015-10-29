@@ -198,9 +198,27 @@ iD.Map = function(context) {
 
     function zoomPan() {
     	//Added for measure layer
-        if(context.mode().id=='measure-add-line' || context.mode().id=='measure-add-area'){return;}
-        else{d3.select('.measure-layer').selectAll('g').remove();}
+        /*if(context.mode().id=='measure-add-line' || context.mode().id=='measure-add-area'){return;}
+        else{d3.select('.measure-layer').selectAll('g').remove();}*/
 
+        //reset measure layer
+    	var points = d3.select(".measure-layer").selectAll(".node.point");
+    	if(!points.empty()){
+    		var polystring = "";
+    		
+    		_.each(points[0],function(p){
+    			var pt = d3.select(p);
+    			var geopt = pt.attr('geocoords')
+    			//replace geopoint w/new svg location
+    			var projpt = context.projection(geopt.split(","));
+    			p = projpt;
+    			polystring = polystring.concat(" " + projpt.toString());
+    		});
+    		
+    		//recreate polygon
+    		d3.select('polygon').attr("points",polystring);
+    	}
+    	
     	if (Math.log(d3.event.scale) / Math.LN2 - 8 < minzoom + 1) {
             surface.interrupt();
             iD.ui.flash(context.container())
@@ -222,6 +240,7 @@ iD.Map = function(context) {
 
         transformed = true;
         iD.util.setTransform(supersurface, tX, tY, scale);
+        
         queueRedraw();
 
         dispatch.move(map);
@@ -242,7 +261,7 @@ iD.Map = function(context) {
         clearTimeout(timeoutId);
 
         //Added for measure layer
-        d3.select('.measure-layer').selectAll('g').remove();
+        /*d3.select('.measure-layer').selectAll('g').remove();*/
 
         // If we are in the middle of a zoom/pan, we can't do differenced redraws.
         // It would result in artifacts where differenced entities are redrawn with

@@ -208,6 +208,7 @@ iD.behavior.MeasureDrawArea = function(context,svg) {
     	var newpt=svg.append('g')
 			.classed('node point',true)
 			.attr('id','measure-vertex-'+nodeId)
+			.attr('geocoords',context.map().mouseCoordinates())
 			.attr('transform','translate('+c[0]+ ',' + c[1] + ')');
 
 		totDist = totDist + segmentDist;
