@@ -98,7 +98,8 @@ iD.behavior.MeasureDrawLine = function(context,svg) {
  	    	
  	    	var c = context.projection(context.map().mouseCoordinates());
     	    line.attr("x2", c[0])
-    	        .attr("y2", c[1]);
+    	        .attr("y2", c[1])
+    	        .attr("pt2",context.map().mouseCoordinates());
     	    
     	    var distance = d3.geo.distance(lastPoint,context.map().mouseCoordinates());
     	    distance = radiansToMeters(distance);
@@ -122,6 +123,7 @@ iD.behavior.MeasureDrawLine = function(context,svg) {
     	var newpt=svg.append('g')
 			.classed('node point',true)
 			.attr('id','measure-vertex-'+nodeId)
+			.attr('geocoords',context.map().mouseCoordinates())
 			.attr('transform','translate('+c[0]+ ',' + c[1] + ')');
 
 		totDist = totDist + segmentDist;
@@ -145,7 +147,9 @@ iD.behavior.MeasureDrawLine = function(context,svg) {
 	    		.attr("x1", c[0])
 		        .attr("y1", c[1])
 		        .attr("x2", c[0])
-		        .attr("y2", c[1]);
+		        .attr("y2", c[1])
+		        .attr("pt1",context.map().mouseCoordinates())
+		        .attr("pt2",context.map().mouseCoordinates());
 			
 			svg.selectAll('g').selectAll('rect').remove();
 			rect = g.insert("rect",":first-child")

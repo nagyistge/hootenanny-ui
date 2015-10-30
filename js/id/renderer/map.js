@@ -195,6 +195,61 @@ iD.Map = function(context) {
             d3.event.stopImmediatePropagation();
         }
     }
+    
+    function resetMeasureLayer(points){
+    	
+    	var rect = d3.select('.measure-layer').select('rect');
+    	var label = d3.select('.measure-layer').select('text');
+    	    	
+    	if(!d3.select(".measure-layer").select('polygon').empty()){
+        	var polystring = "";
+    		
+    		_.each(points[0],function(p){
+    			var pt = d3.select(p);
+    			var geopt = pt.attr('geocoords')
+    			//replace geopoint w/new svg location
+    			var projpt = context.projection(geopt.split(","));
+    			pt.attr('transform','translate('+ projpt.toString() + ')');
+    			polystring = polystring.concat(" " + projpt.toString());
+    		});
+    		
+    		//recreate polygon
+    		d3.select('polygon').attr("points",polystring);    		
+    	}
+    	
+    	if(!d3.select(".measure-layer").select('line').empty()){
+    		_.each(points[0],function(p){
+    			var pt = d3.select(p);
+    			var geopt = pt.attr('geocoords')
+    			//replace geopoint w/new svg location
+    			var projpt = context.projection(geopt.split(","));
+    			pt.attr('transform','translate('+ projpt.toString() + ')');    			
+    		});
+    		
+    		var lines = d3.select(".measure-layer").selectAll("line");
+    		_.each(lines[0],function(l){
+    			//convert pt1 and pt2
+    			var line = d3.select(l);
+    			var pt1 = line.attr('pt1');
+    			var projpt1 = context.projection(pt1.split(","));
+    			line.attr('x1',projpt1[0]);
+    			line.attr('y1',projpt1[1]);
+    			var pt2 = line.attr('pt2');
+    			var projpt2 = context.projection(pt2.split(","));
+    			line.attr('x2',projpt2[0]);
+    			line.attr('y2',projpt2[1]);
+    		});    		
+    		
+    		var lastpt = d3.select(lines[0][lines[0].length-1]).attr('pt2');
+    		var projlast = context.projection(lastpt.split(","));
+    		label.attr("x",projlast[0]+10)
+		   		 .attr("y",projlast[1]+10);
+		   	
+		   	rect.attr("x",projlast[0])
+		   		.attr("y",projlast[1]-(label.dimensions()[1]/2));
+    	}
+    	
+    }
 
     function zoomPan() {
     	//Added for measure layer
@@ -204,19 +259,7 @@ iD.Map = function(context) {
         //reset measure layer
     	var points = d3.select(".measure-layer").selectAll(".node.point");
     	if(!points.empty()){
-    		var polystring = "";
-    		
-    		_.each(points[0],function(p){
-    			var pt = d3.select(p);
-    			var geopt = pt.attr('geocoords')
-    			//replace geopoint w/new svg location
-    			var projpt = context.projection(geopt.split(","));
-    			p = projpt;
-    			polystring = polystring.concat(" " + projpt.toString());
-    		});
-    		
-    		//recreate polygon
-    		d3.select('polygon').attr("points",polystring);
+    		resetMeasureLayer(points);
     	}
     	
     	if (Math.log(d3.event.scale) / Math.LN2 - 8 < minzoom + 1) {
@@ -261,7 +304,10 @@ iD.Map = function(context) {
         clearTimeout(timeoutId);
 
         //Added for measure layer
-        /*d3.select('.measure-layer').selectAll('g').remove();*/
+        var points = d3.select(".measure-layer").selectAll(".node.point");
+    	if(!points.empty()){
+    		resetMeasureLayer(points);
+    	}
 
         // If we are in the middle of a zoom/pan, we can't do differenced redraws.
         // It would result in artifacts where differenced entities are redrawn with

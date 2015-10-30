@@ -161,8 +161,23 @@ iD.behavior.MeasureDrawArea = function(context,svg) {
 
     function mousemove() {
     	var c = context.projection(context.map().mouseCoordinates());
- 	    if(nodeId>0){
+ 	    
+    	if(nodeId>0){
  	    	ptArr[1]=context.map().mouseCoordinates();
+ 	    	
+ 	    	var pts = d3.select(".measure-layer").selectAll(".node.point");
+ 	    	if(!pts.empty()){
+ 	    		points = "";
+ 	    		
+ 	    		_.each(pts[0],function(p){
+ 	    			var pt = d3.select(p);
+ 	    			var geopt = pt.attr('geocoords')
+ 	    			//replace geopoint w/new svg location
+ 	    			var projpt = context.projection(geopt.split(","));
+ 	    			pt.attr('transform','translate('+ projpt.toString() + ')');
+ 	    			points = points.concat(" " + projpt.toString());
+ 	    		});
+ 	    	}
  	    	
  	    	polygon.attr("points",points.concat(" " + c.toString()));
 
