@@ -6,7 +6,16 @@ Hoot.view.utilities.dataset = function(context)
 
     	fieldDiv = form.append('div').classed('pad1y pad2x keyline-bottom col12', true);
     	
-        fieldset = fieldDiv.append('a')
+    	fieldDiv.append('a')
+	        .attr('href', '#')
+	        .text('Import from OSM DB')
+	        .classed('dark fr button loud pad2x big _icon plus', true)
+	        .style('margin-right','5px')
+	        .on('click', function () {
+	        	//context.hoot().control.utilities.osmapidb.newTranslationPopup();
+	        });
+    	
+    	fieldset = fieldDiv.append('a')
             .attr('href', '#')
             .text('Add Dataset')
             .classed('dark fr button loud pad2x big _icon plus', true)
