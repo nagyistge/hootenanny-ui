@@ -4,13 +4,13 @@ Hoot.control.utilities.osmdbimport = function(context) {
     hoot_control_utilities_osmdbimport.newOsmDbImportPopup = function(callback) {
         var saveName = null;
         var d_form = [{
-            label: 'OSM DB API Url',
-            type: 'OsmDbApiUrl',
-            placeholder: 'Enter Url'
+            label: 'OSM API DB',
+            type: 'OsmApiExportDbName',
+            placeholder: 'Enter export database name'
         }, {
-            label: 'Output Name',
+            label: 'Output Layer Name',
             placeholder: 'Save As',
-            type: 'OsmDbApiOutputName'
+            type: 'HootDbOutputLayerName'
         }];
         var modalbg = d3.select('body')
             .append('div')
@@ -83,15 +83,18 @@ Hoot.control.utilities.osmdbimport = function(context) {
                 .on('click', function () {
                     //var spin = submitExp.insert('div',':first-child').classed('_icon _loading row1 col1 fr',true).attr('id', 'basemapimportspin');
 
-                    var url = _form.select('.reset.OsmDbApiUrl').value();
-                    var outputName = _form.select('.reset.OsmDbApiOutputName').value();
+                    var exportDbName = _form.select('.reset.OsmApiExportDbName').value();
+                    var outputName = _form.select('.reset.HootDbOutputLayerName').value();
+                    
+                    console.log(exportDbName);
+                    console.log(id.map().extent());
+                    console.log(outputName);
                     
                     var data = {};
-                    data.inputDbUrl = url;
+                    data.exportDbName = exportDbName;
                     data.bbox = id.map().extent();
                     data.outputLayerName = outputName;
-
-
+                    
                     Hoot.model.REST('ingestOsmApiDb', data,
                         function (d) {
                             if(d.error){
