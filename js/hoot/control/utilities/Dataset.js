@@ -31,7 +31,7 @@ Hoot.control.utilities.dataset = function(context) {
         }, {
             label: 'Export Format',
             type: 'fileExportFileType',
-            combobox: ['File Geodatabase', 'Shapefile', 'Web Feature Service (WFS)', 'Open Street Map (OSM)'],
+            combobox: ['File Geodatabase', 'Shapefile', 'Web Feature Service (WFS)', 'Open Street Map (OSM)', 'MapEdit Export'],
             placeholder: 'File Geodatabase',
             inputtype:'text',
         }, {
@@ -67,7 +67,8 @@ Hoot.control.utilities.dataset = function(context) {
             ;
         fieldset.enter()
             .append('div')
-            .classed('form-field fill-white small keyline-all round space-bottom1', true)
+            .attr('class', function (field) {
+                return 'form-field fill-white small keyline-all round space-bottom1 cont_' + field.type;})
             .each(function(d){
             	if(d.checkbox){d3.select(this).classed('keyline-all',false);}
             })
@@ -134,6 +135,7 @@ Hoot.control.utilities.dataset = function(context) {
                     	.on('change',function(){
                     		checkForTemplate();
                     	});
+                 
                 }
             });;
 
@@ -187,6 +189,12 @@ Hoot.control.utilities.dataset = function(context) {
         	 if(hidden){
         		 d3.select('.cboxAppendFGDBTemplate').select('input').property('checked',false);
         	 }
+
+             if(exportType == 'MapEdit Export'){
+                d3.select('.cont_fileExportTranslation').classed('hidden',true);                
+             } else {
+                d3.select('.cont_fileExportTranslation').classed('hidden',false);   
+             }
          }   
 	};
 

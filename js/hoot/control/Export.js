@@ -47,7 +47,7 @@ Hoot.control.export = function (sidebar) {
         }, {
             label: 'Export Format',
             type: 'fileExportFileType',
-            combobox: ['File Geodatabase', 'Shapefile', 'Web Feature Service (WFS)', 'Open Street Map (OSM)'],
+            combobox: ['File Geodatabase', 'Shapefile', 'Web Feature Service (WFS)', 'Open Street Map (OSM)', 'MapEdit Export'],
             placeholder: 'File Geodatabase',
             inputtype:'text'
         }, {
@@ -178,6 +178,12 @@ Hoot.control.export = function (sidebar) {
 	       	 if(hidden){
 	       		 d3.select('.cboxAppendFGDBTemplate').select('input').property('checked',false);
 	       	 }
+
+             if(exportType == 'MapEdit Export'){
+                d3.select('.fileExportTranslation').classed('hidden',true);                
+             } else {
+                d3.select('.fileExportTranslation').classed('hidden',false);   
+             }
 	        }  
         
         var actions = save

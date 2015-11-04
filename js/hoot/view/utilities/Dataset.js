@@ -12,7 +12,7 @@ Hoot.view.utilities.dataset = function(context)
 	        .classed('dark fr button loud pad2x big _icon plus', true)
 	        .style('margin-right','5px')
 	        .on('click', function () {
-	        	//context.hoot().control.utilities.osmapidb.newTranslationPopup();
+	        	context.hoot().control.utilities.osmdbimport.newOsmDbImportPopup();
 	        });
     	
     	fieldset = fieldDiv.append('a')

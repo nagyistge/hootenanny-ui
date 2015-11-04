@@ -9,6 +9,7 @@ Hoot.control.utilities = function (context){
 	hoot_control_utilities.folder = Hoot.control.utilities.folder(context);
 	hoot_control_utilities.validation = Hoot.control.utilities.validation(context);
 	hoot_control_utilities.filter = Hoot.control.utilities.filter(context);
+	hoot_control_utilities.osmdbimport = Hoot.control.utilities.osmdbimport(context);
 	
 	return hoot_control_utilities;
 };

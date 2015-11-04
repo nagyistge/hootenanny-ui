@@ -77,29 +77,52 @@ Hoot.model.export = function (context)
 		}
         mapId = data.name;
 
-        var param = {};
-        param.translation = selectedTranslation;
-        param.inputtype = 'db';
-        param.input = selectedInput;
-        param.outputtype = selectedOutType;
-        param.outputname = outputname;
-        param.USER_EMAIL = iD.data.hootConfig.userEmail;
-        param.append = appendTemplate.toString();
-        d3.json('/hoot-services/job/export/execute')
-            .header('Content-Type', 'text/plain')
-            .post(JSON.stringify(param), function (error, data) {
-                if(error){
-                if(callback){callback(false);}
-                iD.ui.Alert('Data Download Fail','warning');
-                return;}
+        if(selectedOutType === 'MapEdit Export') {
+            var param = {};
+            param.INPUT = selectedInput;
+            param.OUTPUT = outputname;
+            param.USER_EMAIL = iD.data.hootConfig.userEmail;
+            d3.json('/hoot-services/job/mapeditexport/execute')
+                .header('Content-Type', 'text/plain')
+                .post(JSON.stringify(param), function (error, data) {
+                    if(error){
+                    if(callback){callback(false);}
+                    iD.ui.Alert('Data Download Fail','warning');
+                    return;}
 
 
-                var exportJobId = data.jobid;
-                var statusUrl = '/hoot-services/job/status/' + exportJobId;
-                statusTimer = setInterval(function () {
-                    d3.json(statusUrl, _exportResultHandler);
-                }, iD.data.hootConfig.JobStatusQueryInterval);
-            });
+                    var exportJobId = data.jobid;
+                    var statusUrl = '/hoot-services/job/status/' + exportJobId;
+                    statusTimer = setInterval(function () {
+                        d3.json(statusUrl, _exportResultHandler);
+                    }, iD.data.hootConfig.JobStatusQueryInterval);
+                });
+        } else {
+            var param = {};
+            param.translation = selectedTranslation;
+            param.inputtype = 'db';
+            param.input = selectedInput;
+            param.outputtype = selectedOutType;
+            param.outputname = outputname;
+            param.USER_EMAIL = iD.data.hootConfig.userEmail;
+            param.append = appendTemplate.toString();
+            d3.json('/hoot-services/job/export/execute')
+                .header('Content-Type', 'text/plain')
+                .post(JSON.stringify(param), function (error, data) {
+                    if(error){
+                    if(callback){callback(false);}
+                    iD.ui.Alert('Data Download Fail','warning');
+                    return;}
+
+
+                    var exportJobId = data.jobid;
+                    var statusUrl = '/hoot-services/job/status/' + exportJobId;
+                    statusTimer = setInterval(function () {
+                        d3.json(statusUrl, _exportResultHandler);
+                    }, iD.data.hootConfig.JobStatusQueryInterval);
+                });
+        }
+     
     };
     
     var _exportResultHandler = function(error, result)

@@ -718,7 +718,7 @@ Hoot.model.REST = function (command, data, callback, option) {
         callback(error, response);
       });
   };
-  
+ /* 
   rest.ingestOsmApiDb = function(inputDbUrl, bbox, outputLayerName, callback) 
   {
 	  d3.json('/hoot-services/ingest/apidb?inputDbUrl=' + inputDbUrl + "&bbox=" + bbox +
@@ -734,7 +734,29 @@ Hoot.model.REST = function (command, data, callback, option) {
               if(callback){callback(resp);}
               return resp;
           });
-	  };
+	  };*/
+
+    rest.ingestOsmApiDb = function(data, callback) 
+    {
+        var inputDbUrl = data.inputDbUrl;
+        var bbox = data.bbox;
+        var outputLayerName = data.outputLayerName;
+
+        
+        d3.json('/hoot-services/ingest/apidb?inputDbUrl=' + inputDbUrl + "&bbox=" + bbox +
+              '&outputLayerName=' + outputLayerName)
+          .header('Content-Type', 'text/plain')
+          .post(data.data, function (error, resp) 
+          {
+              if (error) 
+              {
+                return callback(
+                        _alertError(error, "Ingest OSM API DB failed."));
+              }
+              if(callback){callback(resp);}
+              return resp;
+          });
+      };
 
   rest.reviewUpdateStatus = function(data, callback)
   {
