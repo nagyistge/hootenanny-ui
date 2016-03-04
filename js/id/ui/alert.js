@@ -16,7 +16,8 @@ iD.ui.Alert = function(message,type) {
     
     if(type==undefined){type='notice';}
     
-    if(type=='warning'||type=='error'){alertDiv.classed('red',true);}
+    if(type=='warning'){alertDiv.classed('gold',true);}
+    if(type=='error'){alertDiv.classed('red',true);}
     if(type=='notice'){alertDiv.classed('blue',true);}
     if(type=='success'){alertDiv.classed('green',true);}
     
