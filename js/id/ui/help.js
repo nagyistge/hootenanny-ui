@@ -125,12 +125,6 @@ iD.ui.Help = function(context) {
             .html(function(d) { return d.title; })
             .on('click', clickHelp);
 
-        toc.append('li')
-            .attr('class','walkthrough')
-            .append('a')
-            .text(t('splash.walkthrough'))
-            .on('click', clickWalkthrough);
-
         var content = pane.append('div')
             .attr('class', 'left-content');
 

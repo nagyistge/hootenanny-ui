@@ -504,13 +504,13 @@ button.save.has-count .count::before {
 /* Icons */
 
 .icon {
-  //display:inline-block;
+  /*display:inline-block;*/
   vertical-align:top;
   width:20px;
   height:20px;
-  //background:transparent url(img/sprite.svg) no-repeat 0 0;
-  //text-indent:-9999px;
-  //overflow:hidden;
+  /*background:transparent url(img/sprite.svg) no-repeat 0 0;*/
+  /*text-indent:-9999px;*/
+  /*overflow:hidden;*/
   }
 
 .icon.inline {
@@ -549,8 +549,8 @@ button.save.has-count .count::before {
 }
 
 /* Definitions for every icon */
-/*
-.icon.alert     { background-position:   0 0;}
+
+/*.icon.alert     { background-position:   0 0;}
 .icon.point,
 .icon.add-point  { background-position: -20px 0;}
 .icon.line,
@@ -632,26 +632,26 @@ button[disabled] .icon.data       { background-position: -600px -40px;}
 
 .icon.point.modified  { background-position: -22px 0; }
 
-.icon.modified { opacity: .5; }
+.icon.modified { opacity: .5; }*/
 
 /* Out link is special */
 
-.icon.out-link   { height: 14px; width: 14px; background-position: -500px 0;}
+/*.icon.out-link   { height: 14px; width: 14px; background-position: -500px 0;}
 a:hover .icon.out-link   { background-position: -500px -14px;}
 
-.icon.plus-dark    { background-position: -240px -40px;}
+.icon.plus-dark    { background-position: -240px -40px;}*/
 
 /* Universal preset icons */
 
-.icon.source     { background-position:   0 -200px;}
+/*.icon.source     { background-position:   0 -200px;}
 .icon.address    { background-position: -20px -200px;}
 .icon.telephone  { background-position: -40px -200px;}
 .icon.website    { background-position: -60px -200px;}
 .icon.elevation  { background-position: -80px -200px;}
 .icon.wikipedia  { background-position: -100px -200px;}
 .icon.note       { background-position: -120px -200px;}
-.icon.wheelchair { background-position: -140px -200px;}
-*/
+.icon.wheelchair { background-position: -140px -200px;}*/
+
 
 /* ToolBar / Persistent UI Elements
 ------------------------------------------------------- */
@@ -682,7 +682,7 @@ a:hover .icon.out-link   { background-position: -500px -14px;}
     white-space: nowrap;
     text-overflow: ellipsis;
     overflow: hidden;
-    padding: 20px 20px 20px 40px;
+    padding: 20px;
 }
 
 .header button,

@@ -1,4 +1,10 @@
 iD.svg = {
+    RoundProjection: function(projection) {
+        return function(d) {
+            return iD.geo.roundCoords(projection(d));
+        };
+    },
+
     PointTransform: function(projection) {
         return function(entity) {
             // http://jsperf.com/short-array-join

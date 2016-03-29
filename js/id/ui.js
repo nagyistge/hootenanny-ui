@@ -262,6 +262,8 @@ iD.ui = function(context) {
             context.history().unlock();
         };
 
+        var mapDimensions = map.dimensions();
+
         d3.select(window).on('resize.editor', function() {
             map.dimensions(m.dimensions());
             //TODO: Document why this was modified for Hoot
