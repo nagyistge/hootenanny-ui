@@ -83,6 +83,10 @@ iD.ui = function(context) {
             .call(iD.ui.Save(context));
 
         bar.append('div')
+            .attr('class', 'full-screen')
+            .call(iD.ui.FullScreen(context));
+
+        bar.append('div')
             .attr('class', 'spinner')
             .call(iD.ui.Spinner(context));
 
@@ -99,7 +103,7 @@ iD.ui = function(context) {
 
         controls.append('div')
             .attr('class', 'map-control geolocate-control')
-            .call(iD.ui.Geolocate(map));
+            .call(iD.ui.Geolocate(context));
 
         controls.append('div')
             .attr('class', 'map-control background-control')
@@ -270,6 +274,7 @@ iD.ui = function(context) {
 
         function pan(d) {
             return function() {
+				d3.event.preventDefault();
                 context.pan(d);
             };
         }
@@ -282,7 +287,15 @@ iD.ui = function(context) {
             .on('←', pan([pa, 0]))
             .on('↑', pan([0, pa]))
             .on('→', pan([-pa, 0]))
-            .on('↓', pan([0, -pa]));
+            .on('↓', pan([0, -pa]))
+            .on('⇧←', pan([mapDimensions[0], 0]))
+            .on('⇧↑', pan([0, mapDimensions[1]]))
+            .on('⇧→', pan([-mapDimensions[0], 0]))
+            .on('⇧↓', pan([0, -mapDimensions[1]]))
+            .on(iD.ui.cmd('⌘←'), pan([mapDimensions[0], 0]))
+            .on(iD.ui.cmd('⌘↑'), pan([0, mapDimensions[1]]))
+            .on(iD.ui.cmd('⌘→'), pan([-mapDimensions[0], 0]))
+            .on(iD.ui.cmd('⌘↓'), pan([0, -mapDimensions[1]]));
 
         d3.select(document)
             .call(keybinding);

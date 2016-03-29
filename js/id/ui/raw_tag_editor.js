@@ -53,7 +53,8 @@ iD.ui.RawTagEditor = function(context) {
             .data([0]);
 
         var $enter = $newTag.enter().append('button')
-            .attr('class', 'add-tag');
+            .attr('class', 'add-tag')
+			.call(iD.svg.Icon('#icon-plus', 'light'));
 
         $enter.append('span')
             .attr('class', 'icon plus light');
@@ -112,8 +113,7 @@ iD.ui.RawTagEditor = function(context) {
         $enter.append('button')
             .attr('tabindex', -1)
             .attr('class', 'remove minor')
-            .append('span')
-            .attr('class', 'icon delete');
+            .call(iD.svg.Icon('#operation-delete'));
 
         if (context.taginfo()) {
             $enter.each(bindTypeahead);
@@ -176,6 +176,7 @@ iD.ui.RawTagEditor = function(context) {
             });
 
         $items.exit()
+            .each(unbind)
             .remove();
 
         function pushMore() {
@@ -280,6 +281,16 @@ iD.ui.RawTagEditor = function(context) {
                         context.taginfo().endpoint(origTagInfoEndPt);
                     });
                 }));
+        }
+
+        function unbind() {
+            var row = d3.select(this);
+
+            row.selectAll('input.key')
+                .call(d3.combobox.off);
+
+            row.selectAll('input.value')
+                .call(d3.combobox.off);
         }
 
         function keyChange(d) {

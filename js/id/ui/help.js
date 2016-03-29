@@ -63,7 +63,7 @@ iD.ui.Help = function(context) {
 
         function clickHelp(d, i) {
             pane.property('scrollTop', 0);
-            doctitle.text(d.title);
+            doctitle.html(d.title);
             body.html(d.html);
             body.selectAll('a')
                 .attr('target', '_blank');
@@ -79,8 +79,7 @@ iD.ui.Help = function(context) {
                     .on('click', function() {
                         clickHelp(docs[i - 1], i - 1);
                     });
-                prevLink.append('span').attr('class', 'icon back blue');
-                prevLink.append('span').text(docs[i - 1].title);
+                prevLink.append('span').html('&#9668; ' + docs[i - 1].title);
             }
             if (i < docs.length - 1) {
                 var nextLink = nav.append('a')
@@ -88,8 +87,7 @@ iD.ui.Help = function(context) {
                     .on('click', function() {
                         clickHelp(docs[i + 1], i + 1);
                     });
-                nextLink.append('span').text(docs[i + 1].title);
-                nextLink.append('span').attr('class', 'icon forward blue');
+                nextLink.append('span').html(docs[i + 1].title + ' &#9658;');
             }
         }
 
@@ -102,12 +100,13 @@ iD.ui.Help = function(context) {
         var pane = selection.append('div')
                 .attr('class', 'help-wrap map-overlay fillL col5 content hide'),
             tooltip = bootstrap.tooltip()
-            .placement('left')
-            .html(true)
+                .placement('left')
+                .html(true)
                 .title(iD.ui.tooltipHtml(t('help.title'), key)),
             button = selection.append('button')
-            .attr('tabindex', -1)
-            .on('click', toggle)
+                .attr('tabindex', -1)
+                .on('click', toggle)
+                .call(iD.svg.Icon('#icon-help', 'light'))
                 .call(tooltip),
             shown = false;
 
@@ -123,8 +122,14 @@ iD.ui.Help = function(context) {
             .enter()
             .append('li')
             .append('a')
-            .text(function(d) { return d.title; })
+            .html(function(d) { return d.title; })
             .on('click', clickHelp);
+
+        toc.append('li')
+            .attr('class','walkthrough')
+            .append('a')
+            .text(t('splash.walkthrough'))
+            .on('click', clickWalkthrough);
 
         var content = pane.append('div')
             .attr('class', 'left-content');

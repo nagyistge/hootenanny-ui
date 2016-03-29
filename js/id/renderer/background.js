@@ -418,6 +418,18 @@ iD.Background = function(context) {
         return background;
     };
     background.load = function(imagery) {
+        function parseMap(qmap) {
+            if (!qmap) return false;
+            var args = qmap.split('/').map(Number);
+            if (args.length < 3 || args.some(isNaN)) return false;
+            return iD.geo.Extent([args[1], args[2]]);
+        }
+
+        var q = iD.util.stringQs(location.hash.substring(1)),
+            chosen = q.background || q.layer,
+            extent = parseMap(q.map),
+            best;
+
         backgroundSources = imagery.map(function(source) {
             if (source.type === 'bing') {
                 return iD.BackgroundSource.Bing(source, dispatch);
@@ -430,6 +442,10 @@ iD.Background = function(context) {
 
         var q = iD.util.stringQs(location.hash.substring(1)),
             chosen = q.background || q.layer;
+
+        if (!chosen && extent) {
+            best = _.find(this.sources(extent), function(s) { return s.best(); });
+        }
 
         if (chosen && chosen.indexOf('custom:') === 0) {
             background.baseLayerSource(iD.BackgroundSource.Custom(chosen.replace(/^custom:/, '')));

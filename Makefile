@@ -1,19 +1,48 @@
 # See the README for installation instructions.
 
 all: \
+	$(BUILDJS_TARGETS) \
 	dist/iD.css \
 	dist/iD.js \
 	dist/iD.min.js \
 	dist/presets.js \
 	dist/imagery.js \
 	dist/img/line-presets.png \
-	dist/img/relation-presets.png
+	dist/img/relation-presets.png \
+	dist/img/iD-sprite.svg \
+	dist/img/maki-sprite.svg
 
-DATA_FILES = $(shell find data -type f -name '*.json' -o -name '*.md')
-data/data.js: $(DATA_FILES) dist/locales/en.json dist/img/maki-sprite.png
-	node build.js
+MAKI_SOURCES = node_modules/maki/src/*.svg
 
-dist/locales/en.json: data/core.yaml data/presets.yaml
+$(MAKI_SOURCES): node_modules/.install
+
+dist/img/maki-sprite.svg: $(MAKI_SOURCES) Makefile
+	node_modules/.bin/svg-sprite --symbol --symbol-dest . --symbol-sprite $@ $(MAKI_SOURCES)
+
+data/feature-icons.json: $(MAKI_SOURCES)
+	cp -f node_modules/maki/www/maki-sprite.json $@
+
+dist/img/iD-sprite.svg: svg/iD-sprite.src.svg svg/iD-sprite.json
+	node svg/spriteify.js --svg svg/iD-sprite.src.svg --json svg/iD-sprite.json > $@
+
+BUILDJS_TARGETS = \
+	data/presets/categories.json \
+	data/presets/fields.json \
+	data/presets/presets.json \
+	data/presets.yaml \
+	data/taginfo.json \
+	data/data.js \
+	dist/locales/en.js \
+	dist/presets.js \
+	dist/imagery.js
+
+BUILDJS_SOURCES = \
+	$(filter-out $(BUILDJS_TARGETS), $(shell find data -type f -name '*.json')) \
+	data/feature-icons.json \
+	data/core.yaml \
+	data/presets.yaml
+
+$(BUILDJS_TARGETS): $(BUILDJS_SOURCES) build.js
 	node build.js
 
 dist/iD.js: \
@@ -78,7 +107,7 @@ dist/iD.min.js: dist/iD.js Makefile
 	node_modules/.bin/uglifyjs $< -c -m -o $@
 
 dist/iD.css: css/*.css
-	cat css/reset.css css/map.css css/app.css css/feature-icons.css css/dgcarousel.css > $@
+	cat css/reset.css css/map.css css/app.css css/feature-icons.css > $@
 
 node_modules/.install: package.json
 	npm install && touch node_modules/.install
@@ -131,4 +160,4 @@ js/lib/d3.v3.js: $(D3_FILES)
 	@echo 'd3 rebuilt. Please reapply 7e2485d, 4da529f, and 223974d'
 
 js/lib/lodash.js:
-	node_modules/.bin/lodash --debug --output $@ include="any,assign,bind,clone,compact,contains,debounce,difference,each,every,extend,filter,find,first,forEach,groupBy,indexOf,intersection,isEmpty,isEqual,isFunction,keys,last,map,omit,pairs,pluck,reject,some,throttle,union,uniq,unique,values,without,flatten,value,chain,cloneDeep,merge,pick,reduce" exports="global,node"
+	node_modules/.bin/lodash --debug --output $@ include="any,assign,bind,chunk,clone,compact,contains,debounce,difference,each,every,extend,filter,find,first,forEach,forOwn,groupBy,indexOf,intersection,isEmpty,isEqual,isFunction,keys,last,map,omit,pairs,pluck,reject,some,throttle,union,uniq,unique,values,without,flatten,value,chain,cloneDeep,merge,pick,reduce" exports="global,node"

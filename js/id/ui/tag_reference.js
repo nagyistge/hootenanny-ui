@@ -64,12 +64,9 @@ iD.ui.TagReference = function(tag, context) {
             var wikiLink = body
                 .append('a')
                 .attr('target', '_blank')
-                .attr('href', 'http://wiki.openstreetmap.org/wiki/' + docs.title);
-
-            wikiLink.append('span')
-                .attr('class','icon icon-pre-text out-link');
-
-            wikiLink.append('span')
+                .attr('href', 'http://wiki.openstreetmap.org/wiki/' + docs.title)
+				.call(iD.svg.Icon('#icon-out-link', 'inline'))
+				.append('span')
                 .text(t('inspector.reference'));
         });
     }
@@ -103,10 +100,8 @@ iD.ui.TagReference = function(tag, context) {
 
         var enter = button.enter().append('button')
             .attr('tabindex', -1)
-            .attr('class', 'tag-reference-button');
-
-        enter.append('span')
-            .attr('class', 'icon inspect');
+            .attr('class', 'tag-reference-button')
+			.call(iD.svg.Icon('#icon-inspect'));
 
         button.on('click', function () {
             d3.event.stopPropagation();

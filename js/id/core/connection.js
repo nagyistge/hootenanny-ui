@@ -21,6 +21,7 @@ iD.Connection = function(context) {
         nodeStr = 'node',
         wayStr = 'way',
         relationStr = 'relation',
+        userDetails,
       //TODO: Document why this was added for Hoot
         layerZoomArray = [],
         totalNodesCnt = 0 ,
@@ -133,17 +134,6 @@ iD.Connection = function(context) {
             }
             return result;
         }
-
-        var currMapId = null;
-        // get the map id. Do on first one since ids should be coming from same map
-        if(ids && ids.length > 0){
-            var firstId = ids[0];
-            var parts = firstId.split('_');
-            if(parts.length > 1){
-                currMapId = "" + parts[1];
-            }
-        }
-
 
         _.each(_.groupBy(ids, iD.Entity.id.type), function(v, k) {
             var type = k + 's',
@@ -305,7 +295,7 @@ iD.Connection = function(context) {
                     tag: _.map(tags, function(value, key) {
                         return { '@k': key, '@v': value };
                     }),
-                    '@version': 0.3,
+                    '@version': 0.6,
                     '@generator': 'iD'
                 }
             }
@@ -335,7 +325,7 @@ iD.Connection = function(context) {
 
         return {
             osmChange: {
-                '@version': 0.3,
+                '@version': 0.6,
                 '@generator': 'iD',
                 'create': nest(changes.created.map(rep), ['node', 'way', 'relation']),
                 'modify': nest(changes.modified.map(rep), ['node', 'way', 'relation']),
@@ -505,12 +495,13 @@ iD.Connection = function(context) {
                     content: JXON.stringify(connection.osmChangeJXON(changeset_id, changes))
                 }, function(err, xhr) {
                     if (err) return callback(err);
-                    //hoot handler to manage merged descendents
-                    //context.hoot().model.conflicts.updateDescendent(xhr, changemapId);
+                    // POST was successful, safe to call the callback.
+                    // Still attempt to close changeset, but ignore response because #2667
+                    // Add delay to allow for postgres replication #1646 #2678
+                    window.setTimeout(function() { callback(null, changeset_id); }, 2500);
                     oauth.xhr({
                         method: 'PUT',
-                        path: '/api/0.6/changeset/' + changeset_id + '/close?mapId=' + changemapId,
-                        options: { header: { 'Content-Type': 'text/plain' } }
+                        path: '/api/0.6/changeset/' + changeset_id + '/close'
                     }, function(err) {
                         callback(err, changeset_id);
                     });
@@ -578,6 +569,23 @@ iD.Connection = function(context) {
         }
 
         oauth.xhr({ method: 'GET', path: '/api/0.6/user/details' }, done);
+    };
+
+    connection.userChangesets = function(callback) {
+        connection.userDetails(function(err, user) {
+            if (err) return callback(err);
+
+            function done(changesets) {
+                callback(undefined, Array.prototype.map.call(changesets.getElementsByTagName('changeset'),
+                    function (changeset) {
+                        return { tags: getTags(changeset) };
+                    }));
+            }
+
+            d3.xml(url + '/api/0.6/changesets?user=' + user.id).get()
+                .on('load', done)
+                .on('error', callback);
+        });
     };
 
     connection.status = function(callback) {
@@ -1074,6 +1082,7 @@ iD.Connection = function(context) {
     };
 
     connection.flush = function() {
+        userDetails = undefined;
         _.forEach(inflight, abortRequest);
         loadedTiles = {};
         inflight = {};
@@ -1089,12 +1098,14 @@ iD.Connection = function(context) {
     };
 
     connection.logout = function() {
+        userDetails = undefined;
         oauth.logout();
         event.auth();
         return connection;
     };
 
     connection.authenticate = function(callback) {
+        userDetails = undefined;
         function done(err, res) {
             event.auth();
             if (callback) callback(err, res);

@@ -17,6 +17,14 @@ iD.ui.Background = function(context) {
 
     function background(selection) {
 
+        function sortSources(a, b) {
+            return a.best() ? -1
+                : b.best() ? 1
+                : a.id === 'none' ? 1
+                : b.id === 'none' ? -1
+                : d3.ascending(a, b);
+        }
+
         function setOpacity(d) {
             var bg = context.container().selectAll('.background-layer')
                 .transition()
@@ -118,7 +126,8 @@ iD.ui.Background = function(context) {
                 .filter(filter);
 
             var layerLinks = layerList.selectAll('li.layer')
-                .data(sources, function(d) { return d.name(); });
+                .data(sources, function(d) { return d.name(); })
+                .sort(sortSources);
 
             var enter = layerLinks.enter()
                 //Modified for EGD-plugin
@@ -130,6 +139,15 @@ iD.ui.Background = function(context) {
                 .call(bootstrap.tooltip()
                     .title(function(d) { return d.description; })
                     .placement('top'));
+
+            enter.filter(function(d) { return d.best(); })
+                .append('div')
+                .attr('class', 'best')
+                .call(bootstrap.tooltip()
+                    .title(t('background.best_imagery'))
+                    .placement('left'))
+                .append('span')
+                .html('&#9733;');
 
             var label = enter.append('label');
 
@@ -226,6 +244,7 @@ iD.ui.Background = function(context) {
             button = selection.append('button')
                 .attr('tabindex', -1)
                 .on('click', toggle)
+                .call(iD.svg.Icon('#icon-layers', 'light'))
                 .call(tooltip),
             shown = false;
 
@@ -352,10 +371,9 @@ iD.ui.Background = function(context) {
                 .title(t('background.custom_button'))
                 .placement('left'))
             .on('click', editCustom)
-            .append('span')
-            .attr('class', 'icon geocode');
+            .call(iD.svg.Icon('#icon-search'));
 
-        label = custom.append('label');
+        var label = custom.append('label');
 
         label.append('input')
             .attr('type', 'radio')
@@ -466,7 +484,8 @@ iD.ui.Background = function(context) {
             .on('click', function () {
                 context.background().offset([0, 0]);
                 resetButton.classed('disabled', true);
-            });
+            })
+            .call(iD.svg.Icon('#icon-undo'));
 
         resetButton.append('div')
             .attr('class', 'icon undo');

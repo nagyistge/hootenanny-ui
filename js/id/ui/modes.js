@@ -50,9 +50,10 @@ iD.ui.Modes = function(context) {
             
         update();
 
-        buttons.append('span')
-            .attr('class', function(mode) { return mode.id + ' icon icon-pre-text'; });
-
+        buttons.each(function(d) {
+            d3.select(this)
+                .call(iD.svg.Icon('#icon-' + d.button, 'pre-text'));
+        });
         buttons.append('span')
             .attr('class', 'label')
             .text(function(mode) { return mode.title; });

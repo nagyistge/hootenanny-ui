@@ -1,6 +1,9 @@
 iD.ui.EntityEditor = function(context) {
     var event = d3.dispatch('choose'),
         state = 'select',
+        coalesceChanges = false,
+        modified = false,
+        base,
         id,
         preset,
         reference;
@@ -44,6 +47,10 @@ iD.ui.EntityEditor = function(context) {
             .attr('class', 'fr preset-close')
             .append('span')
             .attr('class', 'icon close');
+
+        $enter.append('button')
+            .attr('class', 'fr preset-close')
+            .call(iD.svg.Icon(modified ? '#icon-apply' : '#icon-close'));
 
         $enter.append('h3');
 
