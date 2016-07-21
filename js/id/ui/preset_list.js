@@ -174,7 +174,8 @@ iD.ui.PresetList = function(context) {
              var comboIntput = ftypeWrap.append('input')
                         .attr('id', 'presettranstype')
                         .attr('type', 'text')
-                        .attr('value', iD.util.getCurrentTranslation());
+                        .attr('value', iD.util.getCurrentTranslation())
+                        .property('readOnly', true);
 
             // Link this with plg.getTranslations();
             var comboData = ['OSM','TDSv61', 'TDSv40', 'MGCP'];
