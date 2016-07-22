@@ -171,24 +171,33 @@ iD.ui.PresetList = function(context) {
                             return '<label class="pad1x pad0y strong fill-white round-top keyline-all">' + 'Filter By Type' + '</label>';
                         });
 
-             var comboIntput = ftypeWrap.append('input')
+            var comboData = ['OSM','TDSv61', 'TDSv40', 'MGCP'];
+             var comboIntput = ftypeWrap.append('select')
                         .attr('id', 'presettranstype')
                         .attr('type', 'text')
                         .attr('value', iD.util.getCurrentTranslation())
-                        .property('readOnly', true);
 
-            // Link this with plg.getTranslations();
-            var comboData = ['OSM','TDSv61', 'TDSv40', 'MGCP'];
-            var combo = d3.combobox()
-                    .data(_.map(comboData, function (n) {
-                        return {
-                            value: n,
-                            title: n
-                        };
-                    }));
+            var comboOptions = comboIntput.selectAll('option')
+                        .data(_.map(comboData, function (n) {
+                            return {
+                                value: n,
+                                title: n
+                            };
+                        }))
+                        .enter()
+                        .append('option')
+                        .text(function(d){
+                            return d.title
+                        })
+                        .attr('value', function(d){
+                            return d.title
+                        });
 
-            comboIntput.style('width', '100%')
-                .call(combo);
+            for (var i=0; i<comboOptions[0].length; i++){
+                if (d3.select(comboOptions[0][i]).value() === iD.util.getCurrentTranslation()){
+                    d3.select(comboOptions[0][i]).property('selected', true)
+                }
+            }
 
             comboIntput.on('change', function(){
                 var container = d3.select('#preset-list-container');
