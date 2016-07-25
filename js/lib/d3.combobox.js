@@ -29,7 +29,21 @@ d3.combobox = function() {
             .on('input.typeahead', change)
             .each(function() {
                 var parent = this.parentNode,
-                    sibling = this.nextSibling;
+                    sibling = this.nextSibling,
+                    readOnly = d3.selectAll('.readOnlyInput');
+
+                readOnly.on('click', function(){
+                // prevent the form element from blurring. it blurs
+                    // on mousedown
+                    d3.event.stopPropagation();
+                    d3.event.preventDefault();
+                    if (!shown) {
+                        input.node().focus();
+                        fetch('', render);
+                    } else {
+                        hide();
+                    }
+                })
 
                 var caret = d3.select(parent).selectAll('.combobox-caret')
                     .filter(function(d) { return d === input.node(); })
