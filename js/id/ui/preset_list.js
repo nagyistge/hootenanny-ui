@@ -175,6 +175,8 @@ iD.ui.PresetList = function(context) {
                         .attr('id', 'presettranstype')
                         .attr('type', 'text')
                         .attr('value', iD.util.getCurrentTranslation())
+                        .classed('readOnlyInput', true)
+                        .property('readOnly', true)
 
             // Link this with plg.getTranslations();
             var comboData = ['OSM','TDSv61', 'TDSv40', 'MGCP'];
