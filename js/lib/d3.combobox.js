@@ -49,22 +49,22 @@ d3.combobox = function() {
                     .filter(function(d) { return d === input.node(); })
                     .data([input.node()]);
 
-                caret.enter().insert('div', function() { return sibling; })
+                caret.enter()
+                    .insert('div', function() { return sibling; })
                     .attr('class', 'combobox-caret');
 
-                caret
-                    .on('mousedown', function () {
-                        // prevent the form element from blurring. it blurs
-                        // on mousedown
-                        d3.event.stopPropagation();
-                        d3.event.preventDefault();
-                        if (!shown) {
-                            input.node().focus();
-                            fetch('', render);
-                        } else {
-                            hide();
-                        }
-                    });
+                caret.on('mousedown', function () {
+                    // prevent the form element from blurring. it blurs
+                    // on mousedown
+                    d3.event.stopPropagation();
+                    d3.event.preventDefault();
+                    if (!shown) {
+                        input.node().focus();
+                        fetch('', render);
+                    } else {
+                        hide();
+                    }
+                });
             });
 
         function focus() {
