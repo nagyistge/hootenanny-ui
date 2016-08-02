@@ -186,7 +186,7 @@ Hoot.model.layers = function (context)
                 if(hootLyrs[0][0] !== undefined){
                     var lyr = model_layers.getmapIdByName(d3.select(hootLyrs[0][0]).text());
                     context.connection().lastLoadedLayer(lyr.toString());
-                    context.flush(!context.history().hasChanges());
+                    context.flush();
                 }
 
             });
@@ -258,7 +258,7 @@ Hoot.model.layers = function (context)
         d3.select('.layer-list-hoot').classed('hidden', function() {
             return d3.select(this).selectAll('li').size() === 0;
         });
-        context.flush(!context.history().hasChanges());
+        context.flush();
     };
 
     model_layers.deleteLayer = function(params,callback){
