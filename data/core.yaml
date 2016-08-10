@@ -171,6 +171,11 @@ en:
       annotation:
         create: Added a turn restriction
         delete: Deleted a turn restriction
+    info:
+      title: Info
+      description: Get information about this feature.
+      key: I
+      annotation: Get information.
   undo:
     tooltip: "Undo: {action}"
     nothing: Nothing to undo.
