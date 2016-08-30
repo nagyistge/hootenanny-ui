@@ -1,5 +1,5 @@
 iD.operations.Info = function(selectedIDs, context) {
-    var action = iD.actions.Info(entityId);
+    var action = iD.ui.Info(entityId);
     var entityId = selectedIDs[0];
 
     var operation = function() {
