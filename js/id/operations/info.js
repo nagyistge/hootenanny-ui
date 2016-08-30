@@ -1,35 +1,32 @@
 iD.operations.Info = function(selectedIDs, context) {
+    var action = iD.actions.Info(entityId);
     var entityId = selectedIDs[0];
 
     var operation = function() {
         context.perform(
-            iD.actions.Reverse(entityId),
+            action,
             t('operations.info.annotation'));
     };
-/*
-    operation.available = function() {
-        return selectedIDs.length === 1 &&
-            entity.type === 'way' &&
-            _.uniq(entity.nodes).length > 1;
-    };
+
 
     operation.disabled = function() {
-        var reason;
-        if (extent.percentContainedIn(context.extent()) < 0.8) {
-            reason = 'too_large';
-        } else if (context.hasHiddenConnections(entityId)) {
-            reason = 'connected_to_hidden';
-        }
-        return action.disabled(context.graph()) || reason;
+        return false;
     };
-*/
+
+
     operation.tooltip = function() {
         return t('operations.info.description');
     };
 
+    operation.available = function() {
+        return selectedIDs.length > 1 ||
+            context.entity(selectedIDs[0]).type !== 'node';
+    };
+
     operation.id = 'info';
-    operation.keys = [t('operations.info.key')];
+    operation.keys = [iD.ui.cmd('I'), t('operations.info.key')];
     operation.title = t('operations.info.title');
+
 
     return operation;
 };
