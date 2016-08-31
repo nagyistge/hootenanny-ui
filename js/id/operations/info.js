@@ -29,4 +29,8 @@ iD.operations.Info = function(selectedIDs, context) {
 
 
     return operation;
+<<<<<<< HEAD
 };
+=======
+};
+>>>>>>> origin/633-beta

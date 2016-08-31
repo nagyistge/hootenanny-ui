@@ -228,4 +228,8 @@ iD.actions.Info = function(context) {
     }
 
     return info;
+<<<<<<< HEAD
 };
+=======
+};
+>>>>>>> origin/633-beta

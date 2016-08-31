@@ -31,9 +31,12 @@ iD.modes.Select = function(context, selectedIDs) {
         }
     }
 
-    function closeMenu() {
+    function closeMenu(undefineMenu) {
         if (radialMenu) {
             context.surface().call(radialMenu.close);
+        }
+        if (undefineMenu && undefineMenu === true){
+            radialMenu = undefined;
         }
     }
 
@@ -151,15 +154,22 @@ iD.modes.Select = function(context, selectedIDs) {
             context.install(behavior);
         });
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> origin/633-beta
         var operations = _.without(d3.values(iD.operations), iD.operations.Delete, iD.operations.Info)
                 .map(function(o) { return o(selectedIDs, context); })
                 .filter(function(o) { return o.available(); });
 
         operations.unshift(iD.operations.Delete(selectedIDs, context));
+<<<<<<< HEAD
         operations.unshift(iD.operations.Info(selectedIDs, context));
 
 console.log(selectedIDs);
+=======
+        operations.unshift(iD.operations.Info(selectedIDs,context));
+>>>>>>> origin/633-beta
 
         keybinding
             .on('⎋', function() { context.enter(iD.modes.Browse(context)); }, true)
@@ -188,7 +198,7 @@ console.log(selectedIDs);
             .on('redone.select', update);
 
         context.map()
-            .on('move.select', closeMenu)
+            .on('move.select', function(){closeMenu(true);})
             .on('drawn.select', selectElements);
 
         selectElements();
@@ -224,8 +234,8 @@ console.log(selectedIDs);
         });
 
         keybinding.off();
-        closeMenu();
-        radialMenu = undefined;
+        closeMenu(true);
+        //radialMenu = undefined;
 
         context.history()
             .on('undone.select', null)
