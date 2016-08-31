@@ -41,13 +41,13 @@
      inkscape:window-height="1056"
      id="namedview16475"
      showgrid="true"
-     inkscape:zoom="11.871942"
-     inkscape:cx="589.47419"
-     inkscape:cy="537.74443"
+     inkscape:zoom="1.6232143"
+     inkscape:cx="400"
+     inkscape:cy="280"
      inkscape:window-x="57"
      inkscape:window-y="24"
      inkscape:window-maximized="1"
-     inkscape:current-layer="icons">
+     inkscape:current-layer="svg15462">
     <inkscape:grid
        type="xygrid"
        id="grid16479" />
@@ -4282,6 +4282,32 @@
          id="path12534"
          d="m 489.75842,382.48089 -6.5,3 0,1 6.5,3 1,0 6.5,-3 0,-1 -6.5,-3 -1,0 z m -5.406,6.5 -1.094,0.5 0,1 6.5,3 1,0 6.5,-3 0,-1 -1.094,-0.5 -5.406,2.5 -1,0 -5.406,-2.5 z m 0,4 -1.094,0.5 0,1 6.5,3 1,0 6.5,-3 0,-1 -1.094,-0.5 -5.406,2.5 -1,0 -5.406,-2.5 z"
          inkscape:connector-curvature="0" />
+    </g>
+    <g
+       style="display:inline"
+       id="operation-info">
+      <path
+         transform="translate(-14.067506,0.2038769)"
+         d="m 530,390 a 5,5 0 1 1 -10,0 5,5 0 1 1 10,0 z"
+         sodipodi:ry="5"
+         sodipodi:rx="5"
+         sodipodi:cy="390"
+         sodipodi:cx="525"
+         id="path3919"
+         style="fill:none;stroke:#000000;stroke-width:1.20000005;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+         sodipodi:type="arc" />
+      <text
+         sodipodi:linespacing="125%"
+         id="text4693"
+         y="393.1651"
+         x="508.22327"
+         style="font-size:10px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:FreeMono;-inkscape-font-specification:FreeMono Bold"
+         xml:space="preserve"><tspan
+           style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:FreeMono;-inkscape-font-specification:FreeMono Bold"
+           y="393.1651"
+           x="508.22327"
+           id="tspan4695"
+           sodipodi:role="line">i</tspan></text>
     </g>
   </g>
 </svg>
