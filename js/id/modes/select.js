@@ -154,11 +154,12 @@ iD.modes.Select = function(context, selectedIDs) {
             context.install(behavior);
         });
 
-        var operations = _.without(d3.values(iD.operations), iD.operations.Delete)
+        var operations = _.without(d3.values(iD.operations), iD.operations.Delete, iD.operations.Info)
                 .map(function(o) { return o(selectedIDs, context); })
                 .filter(function(o) { return o.available(); });
 
         operations.unshift(iD.operations.Delete(selectedIDs, context));
+        operations.unshift(iD.operations.Info(selectedIDs,context));
 
         keybinding
             .on('⎋', function() { context.enter(iD.modes.Browse(context)); }, true)
