@@ -43,6 +43,12 @@ iD.ui.Sidebar = function(context) {
                 inspector.state('hide');
                 //ltds.deactivate();
             }
+            //add info button
+           /* var _info = iD.ui.Info();*/
+            d3.select('h3').append('div').attr('class','info-icon info-button-toggle').on('click',function(){
+                d3.select("div#content").call(iD.ui.Info(context));
+            });
+
         };
         sidebar.show = function(component) {
             featureListWrap.classed('inspector-hidden', true);
@@ -58,6 +64,7 @@ iD.ui.Sidebar = function(context) {
         };
     }
 
+        
 
 
     sidebar.hover = function() {};

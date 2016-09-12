@@ -497,6 +497,18 @@ table.map-metadata {
   padding-top: 23px; /*Puts I in the visual center of label*/
 }
 
+/* info icon for feature on sidebar */
+.info-icon{
+  background: url(img/information-15.svg);
+  margin-left: 10px;
+  position: absolute;
+  display: inline-block;
+  width: 15px;
+  height: 15px;
+}
+
+
+
 /*Hootenanny label*/
 .hoot_label{
   height: 20px;

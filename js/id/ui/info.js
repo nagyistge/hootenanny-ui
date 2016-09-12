@@ -4,6 +4,9 @@ iD.ui.Info = function(context) {
         hidden = true;
 
     function info(selection) {
+
+        console.log(selection)
+
         function radiansToMeters(r) {
             // using WGS84 authalic radius (6371007.1809 m)
             return r * 6371007.1809;
@@ -206,6 +209,8 @@ iD.ui.Info = function(context) {
             }
         }
 
+         d3.select('.info-button-toggle')
+            .on('click', toggle);
 
         var wrap = selection.selectAll('.infobox')
             .data([0]);
@@ -214,9 +219,9 @@ iD.ui.Info = function(context) {
             .append('div')
             .attr('class', 'infobox fillD2')
             .style('display', (hidden ? 'none' : 'block'));
-
+/*
         context.map()
-            .on('drawn.info', redraw);
+            .on('drawn.info', redraw);*/
 
         redraw();
 
