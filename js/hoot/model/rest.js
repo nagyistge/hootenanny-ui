@@ -21,12 +21,14 @@ Hoot.model.REST = function (command, data, callback, option) {
 
     rest.jobStatusInterval = 2000;
     rest.Upload = function (data, callback) {
-        if (!data.TRANSLATION || !data.INPUT_TYPE || !data.formData || !data.INPUT_NAME) {
+        if (!data.TRANSLATION || !data.INPUT_TYPE || !data.formData || !data.INPUT_NAME || !data.ALT_NAME) {
             return false;
         }
         var url = '/hoot-services/ingest/ingest/upload?TRANSLATION=' + data.TRANSLATION + '&INPUT_TYPE=' +
-                data.INPUT_TYPE + '&INPUT_NAME=' + data.INPUT_NAME + '&USER_EMAIL=' +
-                iD.data.hootConfig.userEmail + '&NONE_TRANSLATION=' + data.NONE_TRANSLATION;
+                data.INPUT_TYPE + '&INPUT_NAME=' + data.INPUT_NAME + 
+                '&ALT_NAME=' + data.ALT_NAME + 
+                '&USER_EMAIL=' + iD.data.hootConfig.userEmail + 
+                '&NONE_TRANSLATION=' + data.NONE_TRANSLATION;
 
         if(data.FGDB_FC) {
             url += '&FGDB_FC=' + data.FGDB_FC;

@@ -450,6 +450,35 @@ Hoot.model.layers = function (context)
         return selectedLayers;
     };
 
+    model_layers.getUniqueLayerName = function(name) {
+        if(_.isEmpty(_.filter(_.map(
+            _.pluck(context.hoot().model.layers.getAvailLayers(),'name'),
+                function(l){
+                    return l.substring(l.lastIndexOf('|')+1);
+                }),
+            function(f){
+                return f === name;
+            }))
+        ) {
+            return name;
+        }
+
+        var uniquename = false;
+        var lyrName = name;
+        var i = 1;
+        while (uniquename===false){
+            if(!_.isEmpty(_.find(context.hoot().model.layers.getAvailLayers(),{'name':lyrName}))){
+                lyrName = d.name + '_' + i.toString();
+                i++;
+            } else {
+                uniquename = true;
+            }
+        }
+
+        return lyrName;
+    }
+
+
 
     return model_layers;
 };

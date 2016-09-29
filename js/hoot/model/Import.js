@@ -110,9 +110,13 @@ Hoot.model.import = function (context)
             data.NONE_TRANSLATION = false;
         }
 
+        // Ensure INPUT NAME is unique, and create new name if it is not
+        data.INPUT_NAME = context.hoot().model.layers.getUniqueLayerName(container.select(layerNameElemId).value());
+        data.ALT_NAME =  container.select(layerNameElemId).value()
+
+
         data.INPUT_TYPE = typeName;
         data.TRANSLATION = transcriptName;//(transType === 'LTDS 4.0' || !transType) ? 'NFDD.js' : transType + '.js';
-        data.INPUT_NAME = container.select(layerNameElemId).value();
         if(fgdbFCList && fgdbFCList.length > 0) {
             data.FGDB_FC = fgdbFCList;
         }
