@@ -468,7 +468,7 @@ Hoot.model.layers = function (context)
         var i = 1;
         while (uniquename===false){
             if(!_.isEmpty(_.find(context.hoot().model.layers.getAvailLayers(),{'name':lyrName}))){
-                lyrName = d.name + '_' + i.toString();
+                lyrName = name + '_' + i.toString();
                 i++;
             } else {
                 uniquename = true;
