@@ -344,6 +344,7 @@ Hoot.control.conflicts = function (context, sidebar) {
         _reviewOptions.append('input')
             .attr('type', 'submit')
             .attr('value', 'Export Data')
+            .attr('id', 'export_data')
             .classed('fill-darken0 button round pad0y pad2x small strong', true)
             .attr('border-radius','4px')
             .on('click', function () {
@@ -354,6 +355,7 @@ Hoot.control.conflicts = function (context, sidebar) {
         _reviewOptions.append('input')
             .attr('type', 'submit')
             .attr('value', 'Add Another Dataset')
+            .attr('id', 'add_another_dataset')
             .classed('fill-dark button round pad0y pad2x dark small strong margin0', true)
             .attr('border-radius','4px')
             .on('click', function () {

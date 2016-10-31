@@ -178,6 +178,7 @@ Hoot.control.export = function (context, sidebar) {
             .append('input')
             .attr('type', 'submit')
             .attr('value', 'Exit')
+            .attr('id', 'exit_conflate')
             .classed('fill-darken0 button round pad0y pad2x small strong', true)
             .attr('border-radius', '4px')
             .on('click', function () {
