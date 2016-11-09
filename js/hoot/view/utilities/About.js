@@ -25,6 +25,11 @@ Hoot.view.utilities.about = function(context){
         .attr('id','aboutLabel')
         .text('About Hootenanny');
 
+      form.append('div')
+        .append('img')
+        .attr('src', context.imagePath('hoot_final4.png'));
+
+
       var mainContainer = form.append('div').classed('col12 pad1y fill-light',true);
       mainContainer.append('label')
           .classed('aboutHeader',true)
