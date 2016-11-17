@@ -341,7 +341,7 @@ Hoot.control.conflicts = function (context, sidebar) {
 
         d3.selectAll(_reviewOptions.node().childNodes).remove();
 
-        _reviewOptions.append('input')
+        _reviewOptions.append('button')
             .attr('type', 'submit')
             .attr('value', 'Export Data')
             .attr('id', 'export_data')
@@ -351,8 +351,9 @@ Hoot.control.conflicts = function (context, sidebar) {
                     d3.event.stopPropagation();
                     d3.event.preventDefault();
                     _events.exportData();
-            });
-        _reviewOptions.append('input')
+            })
+            .append('span').text('Export Data');
+        _reviewOptions.append('button')
             .attr('type', 'submit')
             .attr('value', 'Add Another Dataset')
             .attr('id', 'add_another_dataset')
@@ -362,7 +363,9 @@ Hoot.control.conflicts = function (context, sidebar) {
                     d3.event.stopPropagation();
                     d3.event.preventDefault();
                     _events.addData();
-            });
+            })
+            .append('span')
+            .text('Add Another Dataset');
 
 
     };

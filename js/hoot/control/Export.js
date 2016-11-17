@@ -175,7 +175,7 @@ Hoot.control.export = function (context, sidebar) {
             .append('div')
             .classed('form-field pill col12', true);
         actions
-            .append('input')
+            .append('button')
             .attr('type', 'submit')
             .attr('value', 'Exit')
             .attr('id', 'exit_conflate')
@@ -185,7 +185,9 @@ Hoot.control.export = function (context, sidebar) {
                 d3.event.stopPropagation();
                 d3.event.preventDefault();
                 event.cancelSaveLayer();
-            });
+            })
+            .append('span')
+            .text('Exit');
         actions
             .append('input')
             .attr('type', 'submit')
