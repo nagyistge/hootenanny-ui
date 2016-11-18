@@ -10,14 +10,14 @@
 
 .carousel-column {
     float: left;
-    width: 160px;
+    width: 260px;
 }
 
 .carousel-thumbnails {
     overflow-x: hidden;
     overflow-y: hidden;
     position: relative;
-    max-height: 90%;
+    max-height: 80%;
 }
 
 .carousel-metadata-list {
@@ -33,6 +33,9 @@
     border-radius: 3px;
     margin-bottom: 20px;
     padding: 10px;
+    width: 80px;
+    float: left;
+    margin-right: 10px;
 }
 
 .carousel-metadata-list li:hover {
@@ -132,7 +135,7 @@ path.carousel-footprint {
     height:29px;
     text-indent:-9999px;
     overflow:hidden;
-    margin-left:35px;
+    margin-left:80px;
 }
 .dgarrow.up {
     -webkit-transform: rotate(270deg);
@@ -221,4 +224,45 @@ div.dgprofile {
 
 .onoffswitch-checkbox:checked + .onoffswitch-label .onoffswitch-switch {
     left: 44px;
+}
+
+/*styling for transparency slider*/
+
+#transparency-slider {
+    width: 180px;
+    height: 100px;
+    display: inline-block;
+}
+
+#transparency-slider rect {
+    y: 14;
+    height: 12px;
+    width: 100px;
+    fill: #c0c0c0;
+    rx: 3;
+    ry: 3;
+}
+
+#transparency-slider svg {
+    height: 60px;
+    width: 130px;
+    display: inline-block;
+    vertical-align: middle;
+}
+
+#transparency-slider circle {
+    cursor: move;
+}
+
+#transparency-slider .tooltip-inner {
+    font-size: 12px;
+    text-align: center;
+    background: #fff;
+    color: #111;
+    width: 160px;
+}
+
+.perc-opacity {
+    font-size: 10px;
+    float: initial;
 }

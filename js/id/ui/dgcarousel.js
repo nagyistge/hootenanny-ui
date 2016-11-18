@@ -73,12 +73,12 @@ iD.ui.dgCarousel = function(context) {
                 var i = d3.interpolateNumber(this.scrollTop, scrollTop);
                 return function(t) { this.scrollTop = i(t); };
             };
-        }
 
-//        function mouseWheelScroll() {
-//            window.console.log(d3.event);
+        }
+        //        function mouseWheelScroll() {
+//            console.log(d3.event);
 //            var delta = Math.max(-1, Math.min(1, (d3.event.wheelDelta || -d3.event.detail)));
-//            window.console.log(delta);
+//            console.log(delta);
 //            var scrollable = d3.select('#dgCarouselThumbnails');
 //            var clientheight = scrollable.property('clientHeight');
 //            var scrolltop = scrollable.property('scrollTop');
@@ -122,6 +122,59 @@ iD.ui.dgCarousel = function(context) {
 
         //context.surface().on('mousedown.carousel-outside', hide);
         context.container().on('mousedown.carousel-outside', hide);
+
+
+    // add transparency slider
+        var transparencySlider = d3.select('.carousel-column.content')
+            .append('div')
+            .attr('id', 'transparency-slider')
+            .attr('class', 'transparency-slider')
+            .call(bootstrap.tooltip()
+                .title('Adjust Image Overlay Transparency')
+                .placement('top'));
+
+        var drag = d3.behavior.drag()
+            .origin(Object)
+            .on('drag', dragMove);
+
+        var svg = transparencySlider.append('svg');
+
+        var g = svg.selectAll('g')
+                    .data([{x: 100, y : 20}])
+                    .enter()
+                        .append('g')
+                        .attr('height', 200)
+                        .attr('width', 100)
+                        .attr('transform', 'translate(16, 10)');
+
+        var slider = transparencySlider.append('span')
+            .attr('class','perc-opacity');
+        g.append('rect');
+        g.append('circle')
+            .attr('r', 8)
+            .attr('cx', function(d) { return d.x; })
+            .attr('cy', function(d) { return d.y; })
+            .attr('fill', '#7092ff')
+            .call(drag);
+
+        function dragMove(d) {
+            //if (d3.selectAll('carousel-metadata-list li.active')[0].length === 0) {
+            var range = Math.max(0, Math.min(100, d3.event.x));
+            d3.select(this)
+                .attr('cx', d.x = range)
+                .attr('cy', d.y = 20);
+            d3.select('.perc-opacity')
+                .text(range + '%');
+            d3.selectAll('.layer-overlay')
+                .style('opacity', range / 100 );
+            //Else to disable slider if no images in carousel are selected
+            // } else if (d3.selectAll('carousel-metadata-list li.active')[0].length > 0) {
+            //     d3.select(this)
+            //     .attr('cx', d.x = 100)
+            //     .attr('cy', d.y = 20);
+            // }
+        };
+
 
         function getImageMetadata() {
             //get zoom
