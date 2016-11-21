@@ -124,14 +124,14 @@ iD.ui.dgCarousel = function(context) {
         context.container().on('mousedown.carousel-outside', hide);
 
 
-    // add transparency slider
+        //Add transparency slider
         var transparencySlider = d3.select('.carousel-column.content')
             .append('div')
             .attr('id', 'transparency-slider')
-            .attr('class', 'transparency-slider')
+            .classed('hidden', true)
             .call(bootstrap.tooltip()
                 .title('Adjust Image Overlay Transparency')
-                .placement('top'));
+                .placement('bottom'));
 
         var drag = d3.behavior.drag()
             .origin(Object)
@@ -156,24 +156,18 @@ iD.ui.dgCarousel = function(context) {
             .attr('cy', function(d) { return d.y; })
             .attr('fill', '#7092ff')
             .call(drag);
+           
+        var range = {100};        
 
         function dragMove(d) {
-            //if (d3.selectAll('carousel-metadata-list li.active')[0].length === 0) {
-            var range = Math.max(0, Math.min(100, d3.event.x));
+            range = Math.max(0, Math.min(100, d3.event.x));
             d3.select(this)
                 .attr('cx', d.x = range)
                 .attr('cy', d.y = 20);
-            d3.select('.perc-opacity')
-                .text(range + '%');
+            d3.select('.perc-opacity').text(range + '%');
             d3.selectAll('.layer-overlay')
                 .style('opacity', range / 100 );
-            //Else to disable slider if no images in carousel are selected
-            // } else if (d3.selectAll('carousel-metadata-list li.active')[0].length > 0) {
-            //     d3.select(this)
-            //     .attr('cx', d.x = 100)
-            //     .attr('cy', d.y = 20);
-            // }
-        };
+        }
 
 
         function getImageMetadata() {
@@ -229,8 +223,11 @@ iD.ui.dgCarousel = function(context) {
 //                                )
                                 .on('click', function(d) {
                                     var active = !d3.select(this).classed('active');
+                                    //var _active = !d3.selectAll('.carousel-metadata-list li.active')[0].length > 0;
                                     d3.select(this).classed('active', active);
                                     loadImage(d, active);
+                                    loadSlider();
+
                                 })
                                 .on('dblclick', function(d) {
                                     loadMetadataPopup(d);
@@ -260,6 +257,21 @@ iD.ui.dgCarousel = function(context) {
                 });
 
                 images.exit().remove();
+
+            }
+        }
+
+        function loadSlider() {
+            var activeImg = d3.selectAll('.carousel-metadata-list li.active')[0].length;
+            if (activeImg > 0) {
+                d3.select('#transparency-slider').classed('hidden', false);
+                d3.select('circle').attr('cx', 100);
+                d3.select('.perc-opacity').text('100%');
+            } else {
+                //Remove and reset transparency slider
+                d3.select('#transparency-slider').classed('hidden', true);
+                d3.select('circle').attr('cx', 100)
+                d3.select('.perc-opacity').text('100%');
             }
         }
 
@@ -335,7 +347,6 @@ iD.ui.dgCarousel = function(context) {
                 //Remove image from dg.imagemeta
                 dg.imagemeta.remove(source.id);
             }
-
         }
 
         function loadMetadataPopup(data) {

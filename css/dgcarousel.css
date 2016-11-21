@@ -10,7 +10,7 @@
 
 .carousel-column {
     float: left;
-    width: 260px;
+    width: 250px;
 }
 
 .carousel-thumbnails {
@@ -230,7 +230,7 @@ div.dgprofile {
 
 #transparency-slider {
     width: 180px;
-    height: 100px;
+    height: 30px;
     display: inline-block;
 }
 
@@ -265,4 +265,8 @@ div.dgprofile {
 .perc-opacity {
     font-size: 10px;
     float: initial;
+}
+
+.hidden {
+    visibility: hidden;
 }
