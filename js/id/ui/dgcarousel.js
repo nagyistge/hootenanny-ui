@@ -128,7 +128,7 @@ iD.ui.dgCarousel = function(context) {
         var transparencySlider = d3.select('.carousel-column.content')
             .append('div')
             .attr('id', 'transparency-slider')
-            .classed('hidden', true)
+            .classed('transparency-slider-hidden', true)
             .call(bootstrap.tooltip()
                 .title('Adjust Image Overlay Transparency')
                 .placement('bottom'));
@@ -262,12 +262,12 @@ iD.ui.dgCarousel = function(context) {
         function loadSlider() {
             var activeImg = d3.selectAll('.carousel-metadata-list li.active')[0].length;
             if (activeImg > 0) {
-                d3.select('#transparency-slider').classed('hidden', false);
+                d3.select('#transparency-slider').classed('transparency-slider-hidden', false);
                 d3.select('circle').attr('cx', 100);
                 d3.select('.perc-opacity').text('100%');
             } else {
                 //Remove and reset transparency slider
-                d3.select('#transparency-slider').classed('hidden', true);
+                d3.select('#transparency-slider').classed('transparency-slider-hidden', true);
                 d3.select('circle').attr('cx', 100)
                 d3.select('.perc-opacity').text('100%');
             }

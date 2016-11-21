@@ -267,6 +267,6 @@ div.dgprofile {
     float: initial;
 }
 
-.hidden {
+.transparency-slider-hidden {
     visibility: hidden;
 }
