@@ -156,8 +156,6 @@ iD.ui.dgCarousel = function(context) {
             .attr('cy', function(d) { return d.y; })
             .attr('fill', '#7092ff')
             .call(drag);
-           
-        var range = {100};        
 
         function dragMove(d) {
             range = Math.max(0, Math.min(100, d3.event.x));
