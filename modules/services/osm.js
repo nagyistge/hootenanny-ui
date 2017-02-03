@@ -12,11 +12,11 @@ import { utilRebind } from '../util/rebind';
 var dispatch = d3.dispatch('authLoading', 'authDone', 'change', 'loading', 'loaded'),
     useHttps = window.location.protocol === 'https:',
     protocol = useHttps ? 'https:' : 'http:',
-    urlroot = protocol + '//www.openstreetmap.org',
+    urlroot = protocol + '//www.openstreetmap.org', //'/hoot-services/osm', //
     blacklists = ['.*\.google(apis)?\..*/(vt|kh)[\?/].*([xyz]=.*){3}.*'],
     inflight = {},
     loadedTiles = {},
-    tileZoom = 16,
+    tileZoom = 16, //2,
     oauth = osmAuth({
         url: urlroot,
         oauth_consumer_key: '5A043yRSEugj4DJ5TljuapfnrflWDte8jTOcWLlT',
@@ -24,6 +24,17 @@ var dispatch = d3.dispatch('authLoading', 'authDone', 'change', 'loading', 'load
         loading: authLoading,
         done: authDone
     }),
+    /* added for Hoot */
+    ndStr = 'nd',
+    tagStr = 'tag',
+    memberStr = 'member',
+    nodeStr = 'node',
+    wayStr = 'way',
+    relationStr = 'relation',
+    layerZoomArray = [],
+    totalNodesCnt = 0 ,
+    maxNodesCnt = 0,    
+    /* end add for hoot */
     rateLimitError,
     userDetails,
     off;
