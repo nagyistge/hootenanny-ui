@@ -884,7 +884,7 @@ export default {
             var mapId = tile.mapId || mapId;
             //firstMapId = mapId;
             var layerName = tile.layerName || layerName;
-            var vis = connection.visLayer(mapId);
+            var vis = this.visLayer(mapId);
 
             //if (loadedTiles[id] || inflight[id]) return;
             //if (_.isEmpty(inflight)) { dispatch.call('loading'); }
@@ -912,7 +912,7 @@ export default {
 
         });
 
-        connection.showDensityRaster = function(doShow){
+        showDensityRaster = function(doShow){
 
             function toggleDensityRaster(d){
                 if(d.subtype === 'density_raster'){
@@ -940,7 +940,7 @@ export default {
 
         };
         // Get the node count from service
-        connection.getTileNodesCountFromURL(url + '/api/0.6/map/nodescount', params, function(resp){
+        this.getTileNodesCountFromURL(url + '/api/0.6/map/nodescount', params, function(resp){
             if(context.hoot().control.conflicts &&
                     context.hoot().control.conflicts.isConflictReviewExist()
                     ){
@@ -1019,7 +1019,7 @@ export default {
             tiles.forEach(function (tile) {
                 var mapId = tile.mapId || mapId;
                 var layerName = tile.layerName || layerName;
-                var vis = connection.visLayer(mapId);
+                var vis = this.visLayer(mapId);
 
                 var curLayer = _.find(loadedData, function (layer) {
                     return layer.mapId === mapId;
@@ -1045,7 +1045,7 @@ export default {
                 }
 
                 // get osm from server for tile
-                inflight[id] = connection.loadFromURL(bboxUrl(tile, mapId, layerName, curLayer.extent, totalNodesCnt > iD.data.hootConfig.maxnodescount),
+                inflight[id] = this.loadFromURL(bboxUrl(tile, mapId, layerName, curLayer.extent, totalNodesCnt > iD.data.hootConfig.maxnodescount),
                         function (err, parsed) {
                             loadedTiles[id] = true;
                             delete inflight[id];
@@ -1072,7 +1072,7 @@ export default {
                                     dispatch.layerAdded(layerName);
                                 }
                                 if(totalNodesCnt > maxNodesCnt){
-                                    connection.showDensityRaster(true);
+                                    showDensityRaster(true);
 
                                     if (context.hoot().control.conflicts.isConflictReviewExist()) {
                                         // When zoomed out during review load reviewable items and the dependent relations
@@ -1090,7 +1090,7 @@ export default {
 
                                     }
                                 } else {
-                                    connection.showDensityRaster(false);
+                                    showDensityRaster(false);
                                 }
                                 if(context.hoot().control.conflicts &&
                                     context.hoot().control.conflicts.isConflictReviewExist()){
