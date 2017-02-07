@@ -20,6 +20,7 @@ export { uiInfo } from './info';
 export { uiInspector } from './inspector';
 export { uiIntro } from './intro';
 export { uiLasso } from './lasso';
+export { uiLayerMenu } from './layer_menu';
 export { uiLoading } from './loading';
 export { uiMapData } from './map_data';
 export { uiMapInMap } from './map_in_map';
