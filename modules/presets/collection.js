@@ -24,6 +24,11 @@ export function presetCollection(collection) {
             }));
         },
 
+        matchSchema: function(schema) {
+            return presetCollection(collection.filter(function(d) {
+                return d.matchSchema(schema);
+            }));
+        },
 
         search: function(value, geometry) {
             if (!value) return this;
@@ -76,7 +81,7 @@ export function presetCollection(collection) {
             var similar_name = searchable.map(function(a) {
                     return {
                         preset: a,
-                        dist: utilEditDistance(value, a.name())
+                        dist: utilEditDistance(value, a.name().toLowerCase())
                     };
                 }).filter(function(a) {
                     return a.dist + Math.min(value.length - a.preset.name().length, 0) < 3;

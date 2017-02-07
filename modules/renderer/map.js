@@ -592,6 +592,17 @@ export function rendererMap(context) {
         map.centerZoom(extent.center(), Math.min(Math.max(z2, zoomLimits[0]), zoomLimits[1]));
     };
 
+    map.zoomToExtent = function(minlon, minlat, maxlon, maxlat, zoomLimits) {
+        var extent = new geoExtent(
+            [parseFloat(minlon), parseFloat(minlat)],
+            [parseFloat(maxlon), parseFloat(maxlat)]
+        );
+
+        var curZoom = 8; //map.getZoomLevel(minlon, minlat, maxlon, maxlat, zoomLimits);
+        zoomLimits = zoomLimits || [6, 20];
+        map.centerZoom(extent.center(), Math.min(Math.max(curZoom, zoomLimits[0]), zoomLimits[1]));
+    };
+
 
     map.centerZoom = function(loc2, z2) {
         var centered = setCenter(loc2),

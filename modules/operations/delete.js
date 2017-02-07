@@ -26,7 +26,7 @@ export function operationDelete(selectedIDs, context) {
             annotation = t('operations.delete.annotation.' + geometry);
 
             // Select the next closest node in the way.
-            if (geometry === 'vertex' && parent.nodes.length > 2) {
+            if (geometry === 'vertex' && parents.length === 1 && parent.nodes.length > 2) {
                 var nodes = parent.nodes,
                     i = nodes.indexOf(id);
 
@@ -54,6 +54,35 @@ export function operationDelete(selectedIDs, context) {
             context.enter(modeBrowse(context));
         }
 
+	/* Added from Hootenanny 1.9.x */
+	/*
+        if (context.hoot().control.conflicts.reviewIds) {
+            if(selectedIDs.length > 0){
+                var selId = selectedIDs[0];
+                var sel = context.hasEntity(selId);
+                var mapId = sel.mapId;
+                var layerName = sel.layerName;
+                if(sel.hootMeta && sel.hootMeta.isReviewDel === true ){
+                    context.perform(
+                        action,
+                        annotation);
+                } else {
+                    context.hoot().model.conflicts.loadMissingFeatureDependencies(mapId,
+                        layerName, selectedIDs, function(){
+                        context.perform(
+                            action,
+                            annotation);
+                    });
+                }
+
+            }
+        } else {
+            context.perform(
+                    action,
+                    annotation);
+        }
+
+	*/
     };
 
 

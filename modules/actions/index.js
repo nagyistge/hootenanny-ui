@@ -27,6 +27,7 @@ export { actionOrthogonalize } from './orthogonalize';
 export { actionRestrictTurn } from './restrict_turn';
 export { actionReverse } from './reverse';
 export { actionRevert } from './revert';
+export { actionReview } from './review';
 export { actionRotateWay } from './rotate_way';
 export { actionSplit } from './split';
 export { actionStraighten } from './straighten';

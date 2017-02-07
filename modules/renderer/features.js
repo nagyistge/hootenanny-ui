@@ -448,7 +448,14 @@ export function rendererFeatures(context) {
             var entity = d[i];
             if (!features.isHidden(entity, resolver, entity.geometry(resolver))) {
                 result.push(entity);
-            }
+            } /* else {
+                if (context.hoot().control.conflicts && context.hoot().control.conflicts.reviewIds) {
+                    if (_.contains(context.hoot().control.conflicts.reviewIds, entity.id)) {
+                        //review id features aren't in data so add them
+                        result.push(entity);
+                    }
+                }
+            } */ // From Hootenanny 1.9.x
         }
         return result;
     };

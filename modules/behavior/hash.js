@@ -83,6 +83,12 @@ export function behaviorHash(context) {
             if (q.comment) context.storage('comment', q.comment);
             hashchange();
             if (q.map) hash.hadHash = true;
+	            
+	    // Holy Grail
+	    if (q.reference) hash.reference = q.reference;
+            if (q.secondary) hash.secondary = q.secondary;
+            if (q.secondary) hash.userid = q.userid;
+            if (q.gpx) hash.gpx = q.gpx;
         }
     }
 
