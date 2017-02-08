@@ -84,10 +84,6 @@ export function uiLayerMenu(context) {
             .classed('reset usedLayersInput combobox-input',true)
             .attr('readonly',true);
 
-        /*_fieldDiv.selectAll('input').call(
-            d3combobox()
-        );*/
-
         function disableTooHigh() {
             div.style('display', context.editable() ? 'none' : 'block');
         }
@@ -95,13 +91,15 @@ export function uiLayerMenu(context) {
         function populateLayerCombo(data){
             console.log(data);
             _fieldDiv.selectAll('input')
-                .call(d3combobox()
-                .data(_.map(data.layers, function (n) {
-                        return {
-                            value: n.name,
-                            title: n.id
-                        };
-                    })))   
+                .each(function(f){
+                    d3.select(this).call(d3combobox()
+                    .data(_.map(data.layers, function (n) {
+                            return {
+                                value: n.name,
+                                title: n.id
+                            };
+                        })))   
+                })                
         }
 
 
