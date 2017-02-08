@@ -18,28 +18,24 @@ export function uiLayerMenu(context) {
 
         var div = selection
             .append('div')
+            .attr('id','add-dataset-pane')
             .attr('class','notice');
 
         div.selectAll('div')
             .data(data)
             .enter()
             .append('form')
-            .classed('round space-bottom1 strong', true)
+            .classed('hootImport round space-bottom1 importableLayer fill-white strong', true)
             .on('submit',function(){
                 d3.event.stopPropagation();
                 d3.event.preventDefault();
             })
-            .append('button')
-            .classed('col4', true)
+            .append('a')
+            .classed('button dark animate strong block _icon big plus pad2x pad1y js-toggle',true)
+            .attr('href','#')
             .text(function(d){
                 return d.text;
-            })
-            .on('click',function(){
-                d3.event.stopPropagation();
-                d3.event.preventDefault();
-            })
-            .append('span')
-            .text(function(){return data.text;});
+            });
 
 
 
